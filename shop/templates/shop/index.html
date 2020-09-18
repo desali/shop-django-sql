@@ -1,0 +1,102 @@
+{% extends "shop/main.html" %}
+
+{% block main_content %}
+    <div class="span3">
+		<ul class="breadcrumb">
+			<li>Categories</li>
+		</ul>
+		<nav class="span3 product_list">
+			<ul class="nav">
+            <li>
+				<a href="">All categories</a>
+			</li>
+
+			{% block list_category %}
+			{% for cat in categories %}
+			<li {% if category.id == cat.id %}class="active"{% endif %}>
+				<a href="{% url 'admin_category_view' cat.id %}">{{ cat.title }}</a>
+			</li>
+			{% endfor %}
+			{% endblock %}
+			</ul>
+		</nav>
+
+        <h3 style="margin-top: 50px;">Cart</h3>
+        <ul class="breadcrumb">
+            {% for product in chosen_products %}
+			<li style="display: flex; justify-content: space-between">
+				<span>{{ product.name }}</span>
+                <span>{{ product.price }} * {{ product.count }}</span>
+			</li>
+			{% endfor %}
+
+            <li>Total count: {{ total }}</li>
+        </ul>
+	</div><!-- end sidebar -->
+
+    <div class="span9 popular_products">
+        <h2 style="display: flex; justify-content: space-between">
+            <span>Products</span>
+            <span style="margin-left: auto">Hello, {{ customer }}</span>
+        </h2>
+        <br />
+      <ul class="thumbnails">
+        {% for product in products %}
+        <li class="span2">
+          <div class="thumbnail">
+            <div class="caption">
+              <a href="{% url 'admin_product_page' product.id %}" title="{{ product.name }}">
+                  {% load static %}
+                  <img alt="{{ product.name }}" src="{% static product.photo %}">
+                <h6>{{ product.name|truncatechars:40 }}</h6>
+              </a>
+
+
+                <span class="label label-info price" style="margin-bottom: 5px;">Price: {{ product.price }} ТГ</span>
+
+                <span class="label label-info price">SALE</span>
+
+                {% if customer %}
+
+                    <button onclick="addProduct({{ product.id }});" class="btn btn-mini add_button" style="margin-top: auto;">Add to cart</button>
+
+                {% else %}
+                    <button class="btn btn-mini" style="margin-top: auto;" disabled>Add to cart</button>
+                {% endif %}
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <script>
+    function addProduct(id) {
+        $.post("{% url 'products_add'%}?id=" + id,
+          {csrfmiddlewaretoken: getCookie('csrftoken'),
+          id: id},
+          function(data, status){
+
+          });
+    }
+
+
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% endblock %}

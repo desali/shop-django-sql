@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+<header class="row">
+	<div class="span6 logo">
+		<a href="{% url 'home' %}"><h1>Shop</h1></a>
+	</div>
+	<div class="span6">
+		<div class="row">
+			<div class="links pull-right">
+				<a href="{% url 'home' %}">Home</a> |
+				<a href="{% url 'admin:login' %}">Admin Login</a> |
+                <a href="{% url 'customer_login' %}">Customer Login</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<div class="row">
+	<div class="span12">
+        {% block main_content %}{% endblock %}
+	</div>
+</div>
+
+<footer>
+	<hr />
+	<div class="row well no_margin_left">
+	<div class="span4">
+		<h4>Information</h4>
+		<ul>
+			<li><a href="#">About Us</a></li>
+			<li><a href="#">Privacy Policy</a></li>
+			<li><a href="#">Terms &amp; Conditions</a></li>
+		</ul>
+	</div>
+	<div class="span4">
+		<h4>Customer Service</h4>
+		<ul>
+			<li><a href="/page/contact/">Contact Us</a></li>
+			<li><a href="#">Returns</a></li>
+			<li><a href="#">Site Map</a></li>
+		</ul>
+	</div>
+	<div class="span3">
+		<h4>Extras</h4>
+		<ul>
+			<li><a href="#">Brands</a></li>
+			<li><a href="#">Affiliates</a></li>
+			<li><a href="#">Specials</a></li>
+		</ul>
+	</div>
+	</div>
+</footer>
+
+</div>
+
+<script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
+<script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+</body>
+</html>

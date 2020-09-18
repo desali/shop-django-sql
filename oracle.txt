@@ -1,0 +1,22 @@
+database configuration assistant;
+
+sqlplus '/' as sysdba;
+
+# alter session set container = pdb1;
+# select * from dual;
+
+create user c##admin identified by 12345;
+
+grant unlimited tablespace to c##admin;
+grant resource, connect, dba to c##admin;
+
+
+# startup;
+# shutdown immediate;
+# alter pluggable database orclpdb open;
+
+### jdbc:oracle:thin:@localhost:1521:xe
+
+
+pip install django
+pip install cx_Oracle

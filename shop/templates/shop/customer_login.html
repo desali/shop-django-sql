@@ -1,0 +1,10 @@
+{% extends "shop/main.html" %}
+
+{% block main_content %}
+<form class="form" method="POST">{% csrf_token %}
+    <h1 class="h3 mb-3 font-weight-normal">Customer login page</h1>
+    {{ form.as_p }}
+    <br>
+    <button type="submit" class="save btn btn-default">Login</button>
+</form>
+{% endblock %}

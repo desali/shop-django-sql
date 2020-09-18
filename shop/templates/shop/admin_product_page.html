@@ -1,0 +1,54 @@
+{% extends "shop/main.html" %}
+
+{% block main_content %}
+    <div class="span3"><!-- start sidebar -->
+		<ul class="breadcrumb">
+			<li>Categories</li>
+		</ul>
+		<nav class="span3 product_list">
+			<ul class="nav">
+            <li>
+				<a href="{% url 'admin_home' %}">All categories</a>
+			</li>
+			{% block list_category %}
+			{% for cat in categories %}
+			<li {% if category.id == cat.id %}class="active"{% endif %}>
+				<a href="{% url 'admin_category_view' cat.id %}">{{ cat.title }}</a>
+			</li>
+			{% endfor %}
+			{% endblock %}
+			</ul>
+		</nav>
+	</div><!-- end sidebar -->
+
+    <div class="span9 popular_products">
+      <h3>Products</h3><br />
+      <ul class="thumbnails">
+        {% for product in products %}
+        <li class="span2">
+          <div class="thumbnail">
+            <div class="caption">
+              <a href="{% url 'admin_product_page' product.id %}" title="{{ product.name }}">
+                  {% load static %}
+                  <img alt="{{ product.name }}" src="{% static product.photo %}">
+                <h6>{{ product.name|truncatechars:40 }}</h6>
+              </a>
+
+
+                <span class="label label-info price" style="margin-bottom: 5px;">Price: {{ product.price }} ТГ</span>
+
+                <span class="label label-info price">Left: {{ product.count }} </span>
+
+                <a class="btn btn-mini" style="margin-top: auto;" href="{% url 'admin_product_page' product.id %}">Edit</a>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+        <form class="form" method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save changes</button>
+        </form>
+    </div>
+{% endblock %}
